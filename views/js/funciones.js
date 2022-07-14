@@ -52,7 +52,11 @@ $("#crearEmpleado").click(function(){
 
 
 
-$(".editarEmpleado").click(function(){ 
+
+
+
+//jquery: botón modificar que esta en listar.php para editar empleado
+/* $(".editarEmpleado").click(function(){ 
     var id = $(this).attr("data-id");
 
     $.ajax({
@@ -70,7 +74,61 @@ $(".editarEmpleado").click(function(){
         $("#modalCrearEmpleado").html(resp);
 
    });    
-});
+}); */
+
+
+
+
+
+
+//javascript: botón modificar que esta en listar.php para editar empleado
+
+// creo una variable con todos los botones de la clase
+let clasesEditarEmpleado = document.getElementsByClassName("editarEmpleado");
+
+//con el "for of" recorro los botones y les asigno el evento
+for(let clase of clasesEditarEmpleado){
+    
+    clase.addEventListener("click", function(){
+
+        let id = clase.getAttribute('data-id');
+        editarEmpleado(id);
+
+    }) 
+}
+
+
+//esta función se ejecuta en el evento click de los botones clasesEditarEmpleado
+async function editarEmpleado(id){
+
+     let data = new FormData();
+         data.append("id", id);
+
+    //fetch  method: "POST"
+    const res = await fetch('views/modules/editar.php', {
+                    /* headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },  */   
+                    method: "POST",     
+                    body: data
+                    
+                });
+    const resp = await res.text();
+    
+    document.querySelector("#botonCrear").classList.add('d-none')
+    document.querySelector("#botonEliminar").classList.add('d-none');
+    document.querySelector("#botonEditar").classList.remove('d-none');
+
+    document.querySelector("#exampleModalLabel").innerHTML = "Editar Empleado";
+    document.querySelector("#modalCrearEmpleado").innerHTML = resp;
+    console.log(resp);
+
+    
+}
+
+
+
 
 
 

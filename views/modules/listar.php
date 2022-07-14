@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
 
-    <h1 class="float-left">Lista de empleados</h1>    
+    <h1 id="oo" class="float-left">Lista de empleados</h1>    
 
         <!-- Button trigger modal -->
     <button type="button" id="crearEmpleado" class="float-right btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="bi bi-person-plus-fill"></i> Crear
@@ -45,14 +45,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-    
-
 
     <?php
       $listarProductos = new MvcController();

@@ -125,7 +125,8 @@ class MvcController{
 		$datosController = $id;
 		$respuesta = Datos::editarEmpleadoModel($datosController, "empleado");
 
-		echo'<form id="formEditar">
+		echo'<div class="container-fluid">	
+			<form id="formEditar">
 
 				<input type="hidden" value="'.$respuesta["id"].'" name="id">
 
@@ -147,7 +148,8 @@ class MvcController{
 				</div>
 
 				<!--<button type="submit" class="btn btn-primary">Actualizar</button>-->
-			 </form>';
+			</form>
+			</div>';
 	}
 
 
