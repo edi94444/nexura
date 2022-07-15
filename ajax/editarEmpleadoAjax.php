@@ -4,6 +4,9 @@
 
     
     $control = new MvcController();
-    $control->actualizarEmpleadoController($_POST['formEditar']);
+    $control->actualizarEmpleadoController($_POST);
+
+ 
+ ///print_r($_POST);
     
 ?>

@@ -147,7 +147,7 @@ class MvcController{
 					</div>
 				</div>
 
-				<!--<button type="submit" class="btn btn-primary">Actualizar</button>-->
+				
 			</form>
 			</div>';
 	}
@@ -156,11 +156,19 @@ class MvcController{
 
 	#ACTUALIZAR EMPLEADO
 	#------------------------------------
-	public function actualizarEmpleadoController($array){		
+	public function actualizarEmpleadoController($array){
 		
-			 $datosController = array( "id"=>$array[0]["value"],
+		
+			//recibiendo datos de javascript fetch()
+		    $datosController = array( "id"=>$array["id"],
+				                      "nombre"=>$array["nombre"],
+				                      "email"=>$array["email"]);	
+
+
+			//recibiendo datos de jquery serializeArray()
+			/*  $datosController = array( "id"=>$array[0]["value"],
 				                      "nombre"=>$array[1]["value"],
-				                      "email"=>$array[2]["value"]);									  
+				                      "email"=>$array[2]["value"]); */									  
 									  
 			$respuesta = Datos::actualizarEmpleadoModel($datosController, "empleado"); 
 

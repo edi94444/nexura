@@ -1,3 +1,6 @@
+'use strict'
+
+
 $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
   })
@@ -52,7 +55,8 @@ $("#crearEmpleado").click(function(){
 
 
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////// versión jquery y javascript botón modificar ////////////
 
 
 //jquery: botón modificar que esta en listar.php para editar empleado
@@ -78,38 +82,20 @@ $("#crearEmpleado").click(function(){
 
 
 
-
+////////////
+////////////
 
 
 //javascript: botón modificar que esta en listar.php para editar empleado
-
-// creo una variable con todos los botones de la clase
-let clasesEditarEmpleado = document.getElementsByClassName("editarEmpleado");
-
-//con el "for of" recorro los botones y les asigno el evento
-for(let clase of clasesEditarEmpleado){
-    
-    clase.addEventListener("click", function(){
-
-        let id = clase.getAttribute('data-id');
-        editarEmpleado(id);
-
-    }) 
-}
-
-
 //esta función se ejecuta en el evento click de los botones clasesEditarEmpleado
-async function editarEmpleado(id){
+const editarEmpleado = async(id) => {
 
      let data = new FormData();
          data.append("id", id);
 
     //fetch  method: "POST"
     const res = await fetch('views/modules/editar.php', {
-                    /* headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    },  */   
+                       
                     method: "POST",     
                     body: data
                     
@@ -122,19 +108,42 @@ async function editarEmpleado(id){
 
     document.querySelector("#exampleModalLabel").innerHTML = "Editar Empleado";
     document.querySelector("#modalCrearEmpleado").innerHTML = resp;
-    console.log(resp);
-
-    
 }
 
 
 
+// creo una variable con todos los botones de la clase
+let clasesEditarEmpleado = document.querySelectorAll(".editarEmpleado");
+
+//con el "for of" recorro los botones y les asigno el evento
+for(let clase of clasesEditarEmpleado){
+    
+    clase.addEventListener("click", function(){
+
+        let id = clase.getAttribute('data-id');
+        editarEmpleado(id);
+
+    }) 
+}
+
+//////////// versión jquery y javascript botón modificar ////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
 
-$("#botonEditar").on("click", function(){
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////// versión jquery y javascript botón actualizar (confirmar modificar) ////////////
+
+
+//jquery: botón actualizar  sale en la modal editar empleado
+/* $("#botonEditar").on("click", function(){
     var formEditar = $("#formEditar").serializeArray();
 
      $.ajax({
@@ -152,7 +161,48 @@ $("#botonEditar").on("click", function(){
         }; 
     
     }); 
-});
+}); */
+
+
+
+
+////////////
+////////////
+
+
+//javascript: botón actualizar  sale en la modal editar empleado
+const confirmarEditar = async() => {
+
+    const form = document.querySelector('#formEditar');    
+    var data = new FormData(form);
+    
+    const res = await fetch('ajax/editarEmpleadoAjax.php',{
+
+                    method: "POST",     
+                    body: data
+
+                });
+    const resp = await res.text();  
+
+
+    if(resp == "ok"){
+        window.location.href = 'index.php?action=listar';
+    }else{
+        alert('Ocurrió un error');
+    }; 
+
+    
+}
+
+botonEditar.addEventListener("click", confirmarEditar);
+
+
+//////////// versión jquery y javascript botón actualizar (confirmar modificar) ////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 
 
