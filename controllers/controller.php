@@ -159,13 +159,13 @@ class MvcController{
 	public function actualizarEmpleadoController($array){
 		
 		
-			//recibiendo datos de javascript fetch()
+			//recibiendo datos de javascript fetch() FormData
 		    $datosController = array( "id"=>$array["id"],
 				                      "nombre"=>$array["nombre"],
 				                      "email"=>$array["email"]);	
 
 
-			//recibiendo datos de jquery serializeArray()
+			//recibiendo datos de jquery ajax serializeArray()
 			/*  $datosController = array( "id"=>$array[0]["value"],
 				                      "nombre"=>$array[1]["value"],
 				                      "email"=>$array[2]["value"]); */									  
@@ -173,7 +173,12 @@ class MvcController{
 			$respuesta = Datos::actualizarEmpleadoModel($datosController, "empleado"); 
 
 			if($respuesta == "ok"){
-				echo "ok";
+
+				//enviando respuesta a fetch json
+				echo json_encode("ok");
+
+				//enviando respuesta a jquery ajax
+				//echo "ok";
 				
 			};	
 	}
@@ -189,7 +194,7 @@ class MvcController{
 		$respuesta = Datos::eliminarEmpleadosModel($datosController, "empleado");
 
 		if($respuesta == "ok"){
-			echo "ok";
+			echo json_encode("ok");
 		
 		}	
 

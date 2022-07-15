@@ -5,5 +5,7 @@
     
     $control = new MvcController();
     $control->eliminarEmpleadosController($_POST['id']);
+
+
     
 ?>

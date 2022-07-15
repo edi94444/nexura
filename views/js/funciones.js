@@ -88,7 +88,7 @@ $("#crearEmpleado").click(function(){
 
 //javascript: botón modificar que esta en listar.php para editar empleado
 //esta función se ejecuta en el evento click de los botones clasesEditarEmpleado
-const editarEmpleado = async(id) => {
+const modalEditarEmpleado = async(id) => {
 
      let data = new FormData();
          data.append("id", id);
@@ -100,6 +100,7 @@ const editarEmpleado = async(id) => {
                     body: data
                     
                 });
+    //se usa .text() y no json() cuando la respuesta de php no está codificada con json_encode()           
     const resp = await res.text();
     
     document.querySelector("#botonCrear").classList.add('d-none')
@@ -113,15 +114,15 @@ const editarEmpleado = async(id) => {
 
 
 // creo una variable con todos los botones de la clase
-let clasesEditarEmpleado = document.querySelectorAll(".editarEmpleado");
+let botonesModificarEmpleado = document.querySelectorAll(".editarEmpleado");
 
 //con el "for of" recorro los botones y les asigno el evento
-for(let clase of clasesEditarEmpleado){
+for(let boton of botonesModificarEmpleado){
     
-    clase.addEventListener("click", function(){
+    boton.addEventListener("click", function(){
 
-        let id = clase.getAttribute('data-id');
-        editarEmpleado(id);
+        let id = boton.getAttribute('data-id');
+        modalEditarEmpleado(id);
 
     }) 
 }
@@ -171,10 +172,12 @@ for(let clase of clasesEditarEmpleado){
 
 
 //javascript: botón actualizar  sale en la modal editar empleado
-const confirmarEditar = async() => {
+const confirmarEditarEmpleado = async() => {
 
     const form = document.querySelector('#formEditar');    
     var data = new FormData(form);
+    //console.log(data.get('id'));
+    
     
     const res = await fetch('ajax/editarEmpleadoAjax.php',{
 
@@ -182,19 +185,18 @@ const confirmarEditar = async() => {
                     body: data
 
                 });
-    const resp = await res.text();  
+    //se usa json() y no text() cuando la respuesta de php está codificada con json_encode()            
+    const resp = await res.json();  
 
 
     if(resp == "ok"){
         window.location.href = 'index.php?action=listar';
     }else{
         alert('Ocurrió un error');
-    }; 
-
-    
+    };
 }
 
-botonEditar.addEventListener("click", confirmarEditar);
+botonEditar.addEventListener("click", confirmarEditarEmpleado);
 
 
 //////////// versión jquery y javascript botón actualizar (confirmar modificar) ////////////
@@ -206,8 +208,11 @@ botonEditar.addEventListener("click", confirmarEditar);
 
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////// versión jquery y javascript botón eliminar empleado ////////////
 
-$(".eliminarEmpleado").click(function(){ 
+
+/* $(".eliminarEmpleado").click(function(){ 
     var id = $(this).attr("data-id");
     var nombre = $(this).attr("data-nombre");
     $("#botonCrear").addClass('d-none');
@@ -217,10 +222,10 @@ $(".eliminarEmpleado").click(function(){
     $("#exampleModalLabel").html('Eliminar Empleado');
     $("#modalCrearEmpleado").html('Está seguro de eliminar empleado '+nombre+'?'); 
     $("#modalCrearEmpleado").append("<input type='hidden' id='capturaId' value='"+id+"'>");   
-});
+}); */
 
 
-$("#botonEliminar").on("click", function(){
+/* $("#botonEliminar").on("click", function(){
     var id = $("#capturaId").val();
     
 
@@ -240,10 +245,66 @@ $("#botonEliminar").on("click", function(){
         }; 
     
     });  
-});
+}); */
 
 
 
+////////////
+////////////
+
+
+const modalBorrarEmpleado = (id, nombre) => {
+
+    botonCrear.classList.add('d-none');
+    botonEditar.classList.add('d-none');
+    botonEliminar.classList.remove('d-none');
+    
+    exampleModalLabel.innerHTML = 'Eliminar Empleado';
+    modalCrearEmpleado.innerHTML = 'Está seguro de eliminar empleado '+nombre+'?';
+    modalCrearEmpleado.innerHTML += "<input type='hidden' id='capturaId' value='"+id+"'>";
+}
+
+let botonesBorrarEmpleado = document.querySelectorAll('.eliminarEmpleado');
+
+for(let boton of botonesBorrarEmpleado){
+    boton.addEventListener("click", function(){
+        let id = boton.getAttribute('data-id');
+        let nombre = boton.getAttribute('data-nombre');
+        modalBorrarEmpleado(id, nombre);
+    })
+}
+
+
+
+
+const confirmarBorrarEmpleado = async () => {
+    let id = capturaId.value;
+
+    let data = new FormData();
+        data.append("id", id);
+    const res = await fetch('ajax/eliminarEmpleadoAjax.php', {
+
+                    method: "POST",
+                    body: data
+
+                });
+    const resp = await res.json();    
+            
+    if(resp == "ok"){
+        window.location.href = 'index.php?action=listar';
+    }else{
+        alert('Ocurrió un error');
+    };             
+    
+
+}
+
+
+botonEliminar.addEventListener("click", confirmarBorrarEmpleado)
+
+
+//////////// versión jquery y javascript botón eliminar empleado ////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
