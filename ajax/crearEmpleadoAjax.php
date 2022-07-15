@@ -4,6 +4,7 @@
 
     
     $control = new MvcController();
-    $control->creaEmpleadosController($_POST['formCrear']);
-    
+    $control->creaEmpleadosController($_POST);
+ 
+
 ?>

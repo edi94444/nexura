@@ -38,40 +38,12 @@ class MvcController{
 
 	#CREA EMPLEDOS
 	#------------------------------------
-	public function creaEmpleadosController($array){		
-		
-		$datosController = array();
-		foreach($array as $row=>$item){
-			
-			if(($item['name']) == 'nombre'){
-				$datosController['nombre'] = $item['value'];
-			}
-			if(($item['name']) == 'email'){
-				$datosController['email'] = $item['value'];
-			}
-			if(($item['name']) == 'sexo'){
-				$datosController['sexo'] = $item['value'];
-			}
-			if(($item['name']) == 'area_id'){
-				$datosController['area_id'] = $item['value'];
-			}
-			if(($item['name']) == 'descripcion'){
-				$datosController['descripcion'] = $item['value'];
-			}
-			if(($item['name']) == 'boletin'){
-				$datosController['boletin'] = $item['value'];
-			}
-			if(($item['name']) == 'roles'){
-				$datosController['roles'][] = $item['value'];
-			}
-
-		}
+	public function creaEmpleadosController($datosController){
 		
 		$respuesta = Datos::creaEmpleadosModel($datosController, "empleado");
 
 		if($respuesta == "ok"){
-			echo "ok";
-			
+			echo "ok";			
 		};
 
 	}
@@ -229,7 +201,7 @@ class MvcController{
 		foreach($respuesta as $item){			
 			$i++;
 			echo "<div class='form-check'>";
-			echo "<input class='form-check-input' type='checkbox' id='rolesCheck$i' name='roles' value='$item[id]'>";
+			echo "<input class='form-check-input' type='checkbox' id='rolesCheck$i' name='roles[]' value='$item[id]'>";
 			echo "<label class='form-check-label' for='rolesCheck$i'>$item[nombre]</label>";
 			echo "</div>";
 			

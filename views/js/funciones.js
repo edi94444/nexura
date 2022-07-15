@@ -7,34 +7,10 @@ $('#myModal').on('shown.bs.modal', function () {
 
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////// versión jquery y javascript botón crear empleado ////////////
 
-
-
-$("#botonCrear").on("click", function(){
-    var formCrear = $("#formCrear").serializeArray();
-
-     $.ajax({
-
-        url : 'ajax/crearEmpleadoAjax.php',
-        data: {formCrear},
-        type : 'post',
-    
-    }).done( function(resp) {
-        
-        if(resp == "ok"){
-            window.location.href = 'index.php?action=listar';
-        }else{
-            alert('Ocurrió un error');
-        };
-    
-    }); 
-});
-
-
-
-
-
-$("#crearEmpleado").click(function(){    
+/* $("#crearEmpleado").click(function(){    
 
      $.ajax({
 
@@ -50,6 +26,87 @@ $("#crearEmpleado").click(function(){
 
     });    
 });
+ */
+
+
+
+/* $("#botonCrear").on("click", function(){
+    var formCrear = $("#formCrear").serialize();
+
+     $.ajax({
+
+        url : 'ajax/crearEmpleadoAjax.php',
+        data: formCrear,
+        type : 'post'
+    
+    }).done( function(resp) {
+        
+        if(resp == "ok"){
+            window.location.href = 'index.php?action=listar';
+        }else{
+            alert('Ocurrió un error');
+        }; 
+
+        //console.log(resp);
+
+
+    
+    }); 
+}); */
+
+
+
+////////////
+////////////
+
+
+const modalCrearEmpleado = async() => {
+
+    const res = await fetch("views/modules/registro.php");
+    const resp = await res.text();
+
+    botonCrear.classList.remove('d-none');
+    botonEditar.classList.add('d-none');
+    botonEliminar.classList.add('d-none');
+
+    exampleModalLabel.innerHTML = "Crear Empleado";
+    document.querySelector('#modalCrearEmpleado').innerHTML = resp;
+
+}
+
+crearEmpleado.addEventListener("click", modalCrearEmpleado) 
+
+
+
+
+ const confirmarCrearEmpleado = async () => {
+
+    const form = document.querySelector('#formCrear');
+    var data = new FormData(form);
+
+    const res = await fetch('ajax/crearEmpleadoAjax.php', {
+                    method: "POST",
+                    body: data
+                });
+    const resp = await res.text();   
+    
+    if(resp == "ok"){
+        window.location.href = 'index.php?action=listar';
+    }else{
+        alert('Ocurrió un error');
+    };
+
+ 
+}
+
+botonCrear.addEventListener("click", confirmarCrearEmpleado)
+
+
+//////////// versión jquery y javascript botón crear empleado ////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
 
@@ -260,8 +317,8 @@ const modalBorrarEmpleado = (id, nombre) => {
     botonEliminar.classList.remove('d-none');
     
     exampleModalLabel.innerHTML = 'Eliminar Empleado';
-    modalCrearEmpleado.innerHTML = 'Está seguro de eliminar empleado '+nombre+'?';
-    modalCrearEmpleado.innerHTML += "<input type='hidden' id='capturaId' value='"+id+"'>";
+    document.querySelector('#modalCrearEmpleado').innerHTML = 'Está seguro de eliminar empleado '+nombre+'?';
+    document.querySelector('#modalCrearEmpleado').innerHTML += "<input type='hidden' id='capturaId' value='"+id+"'>";
 }
 
 let botonesBorrarEmpleado = document.querySelectorAll('.eliminarEmpleado');
