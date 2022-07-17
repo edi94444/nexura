@@ -158,15 +158,44 @@ const modalEditarEmpleado = async(id) => {
                     
                 });
     //se usa .text() y no json() cuando la respuesta de php no está codificada con json_encode()           
-    const resp = await res.text();
+    const resp = await res.json();
     
     document.querySelector("#botonCrear").classList.add('d-none')
     document.querySelector("#botonEliminar").classList.add('d-none');
     document.querySelector("#botonEditar").classList.remove('d-none');
 
     document.querySelector("#exampleModalLabel").innerHTML = "Editar Empleado";
-    document.querySelector("#modalCrearEmpleado").innerHTML = resp;
+    document.querySelector("#modalCrearEmpleado").innerHTML = `
+
+        <div class="container-fluid">	
+        <form id="formEditar">
+
+            <input type="hidden" value="${resp.id}" name="id">
+
+            <div class="form-row">
+
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4">Nombre</label>
+                    <input type="text" class="form-control" id="inputEmail4" value="${resp.nombre}" name="nombre" readonly>
+                </div>
+            </div>
+
+                
+            <div class="form-row">					
+
+                <div class="form-group col-md-4">
+                    <label for="inputAddress">Email</label>
+                    <input type="email" class="form-control" id="inputAddress" value="${resp.email}" name="email" required>
+                </div>
+            </div>
+
+            
+        </form>
+        </div>     
+    `;
 }
+
+
 
 
 

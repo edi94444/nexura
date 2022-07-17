@@ -5,13 +5,10 @@ require_once "../../models/crud.php";
 
 			$id=$_POST['id'];
 			$editarProducto = new MvcController();
-			$editarProducto -> editarEmpleadoController($id);
+			$res = $editarProducto -> editarEmpleadoController($id);
 
-
-		/* 	$_SESSION['id']=$_POST['id'];
-			$editarProducto = new MvcController();
-			$editarProducto -> editarEmpleadoController($_SESSION['id']); */
-			
+			echo json_encode($res);
+		
 ?>
 
 

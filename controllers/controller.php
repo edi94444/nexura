@@ -95,33 +95,10 @@ class MvcController{
 	public function editarEmpleadoController($id){
 
 		$datosController = $id;
-		$respuesta = Datos::editarEmpleadoModel($datosController, "empleado");
+		$res = Datos::editarEmpleadoModel($datosController, "empleado");
 
-		echo'<div class="container-fluid">	
-			<form id="formEditar">
+		return $res;
 
-				<input type="hidden" value="'.$respuesta["id"].'" name="id">
-
-				<div class="form-row">
-
-					<div class="form-group col-md-4">
-						<label for="inputEmail4">Nombre</label>
-						<input type="text" class="form-control" id="inputEmail4" value="'.$respuesta["nombre"].'" name="nombre" readonly>
-					</div>
-				</div>
-
-					
-				<div class="form-row">					
-
-					<div class="form-group col-md-2">
-						<label for="inputAddress">Email</label>
-						<input type="email" class="form-control" id="inputAddress" value="'.$respuesta["email"].'" name="email" required>
-					</div>
-				</div>
-
-				
-			</form>
-			</div>';
 	}
 
 

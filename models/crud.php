@@ -26,7 +26,7 @@ class Datos extends Conexion{
 
 			$stmt = Conexion::conectar()->prepare("SELECT MAX(id) AS id FROM $tabla");		
 			$stmt->execute();
-			$id = $stmt->fetch();
+			$id = $stmt->fetch(PDO::FETCH_ASSOC);
 
 			foreach($datosModel['roles'] as $rol){
 					$stmt = Conexion::conectar()->prepare("INSERT INTO empleado_rol (empleado_id, rol_id) VALUES (:empleado_id, :rol_id)");
@@ -65,7 +65,7 @@ class Datos extends Conexion{
 		ORDER BY e.id desc;");	
 		$stmt->execute();
 		 
-		return $stmt->fetchAll();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 		$stmt->close();
 
@@ -82,7 +82,7 @@ class Datos extends Conexion{
 		$stmt->bindParam(":id", $datosModel);	
 		$stmt->execute();
 
-		return $stmt->fetch();
+		return $stmt->fetch(PDO::FETCH_ASSOC);
 
 		$stmt->close();
 
